@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.yornellas.projectorder.entities.User;
 import com.github.yornellas.projectorder.repositories.UserRepository;
+import com.github.yornellas.projectorder.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
 	public User findById(Long id) {
 		Optional<User> object = repository.findById(id);
 		
-		return object.get();
+		return object.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
